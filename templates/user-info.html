@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}{{user.first_name}} {{user.last_name}}{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-6 align-self-center">
+            <div class="card m-4" style="width: 18rem;">
+                <div class="card-body">
+                  <h3 class="card-title">
+                    {{user.first_name}} {{user.last_name}}
+                    <span>
+                      <form action="/users/{{user.username}}/delete" method="POST">
+                        <button type="submit" class="bg-transparent border-0"><span><i class="fas fa-user-slash w3-small"></i></span></button>
+                      </form>
+                      </span>
+                  </h3>
+                  <h6 class="card-subtitle mb-2 text-muted">{{user.username}}</h6>
+                  <p class="card-text">{{user.email}}</p>
+                  {% for feedback in user.feedback %}
+                  <div class="container border m-2">
+                    {{feedback.title}}
+                    <hr>
+                    {{feedback.content}}
+                    <a href="/feedback/{{feedback.id}}/update"><i class="far fa-edit"></i></a>
+                    <form action="/feedback/{{ feedback.id }}/delete" method="POST">
+                      <button type="submit" class="bg-transparent border-0"><span><i class="fas fa-trash-alt"></i></span></button>
+                    </form>
+                  </div>
+                  {% endfor %}
+                  <a href="/users/{{user.username}}/feedback/add" class="btn btn-primary">ADD SOME FEEDBACK</a>
+
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
